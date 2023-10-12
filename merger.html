@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Merger Webpage</title>
+	<style>
+		.flex-container {
+			display: flex;
+			flex-direction: row;
+			background-color: red;
+		}
+
+		.flex-container>div {
+			/*div children of the flex container*/
+			background-color: #f1f1f1;
+			margin: 10px;
+			padding: 20px;
+			font-size: 30px;
+		}
+
+		/* Responsive layout */
+		@media (max-width: 600px) {
+			.flex-container {
+				flex-direction: column;
+				background-color: green;
+			}
+		}
+	</style>
+</head>
+
+
+
+<body>
+    <h3>Ananda Reddy Alla builds a merger</h3>
+
+	<input type="text" id="inputField" placeholder="Enter text">
+    <button id="addEnd">Add End</button>
+    <button id="addFront">Add Front</button>
+    <button id="remove">Remove</button>
+    <div class="flex-container" id="target">
+        <div class="merger">row item 1</div>   
+        <div class="merger">row item 2</div>  
+        <div class="merger">row item 3</div>  
+    </div>
+
+</body>
+<script>
+	// Function to create a new merger element
+function createMergerElement(text) {
+    const newElement = document.createElement("div");
+    newElement.className = "merger";
+    newElement.innerHTML = text;
+    return newElement;
+}
+
+// Function to add an element at the end of the flex container
+function addEnd() {
+    const inputField = document.getElementById("inputField");
+    const inputValue = inputField.value;
+
+    if (inputValue) {
+        const container = document.querySelector(".flex-container");
+        const newElement = createMergerElement(inputValue);
+        container.appendChild(newElement);
+        inputField.value = "";
+    }
+}
+
+// Function to add an element at the front of the flex container
+function addFront() {
+    const inputField = document.getElementById("inputField");
+    const inputValue = inputField.value;
+
+    if (inputValue) {
+        const container = document.querySelector(".flex-container");
+        const newElement = createMergerElement(inputValue);
+        const firstElement = container.firstChild;
+        container.insertBefore(newElement, firstElement);
+        inputField.value = "";
+    }
+}
+
+// Function to remove the middle element from the flex container
+function remove() {
+    const mergerItems = document.getElementsByClassName("merger");
+    const length = mergerItems.length;
+    if (length > 0) {
+        const middleIndex = Math.floor(length / 2);
+        mergerItems[middleIndex].remove();
+    }
+}
+
+// Set onclick properties for the buttons
+document.getElementById("addEnd").onclick = addEnd;
+document.getElementById("addFront").onclick = addFront;
+document.getElementById("remove").onclick = remove;
+</script>
+
+</html>
