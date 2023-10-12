@@ -36,6 +36,7 @@
     <button id="addEnd">Add End</button>
     <button id="addFront">Add Front</button>
     <button id="remove">Remove</button>
+    <button id="swap">swap</button>
     <div class="flex-container" id="target">
         <div class="merger">row item 1</div>   
         <div class="merger">row item 2</div>  
@@ -89,10 +90,30 @@ function remove() {
     }
 }
 
+function swap() {
+        const elements = document.querySelectorAll('.merger');
+        const index1 = Math.floor(Math.random() * elements.length);
+        let index2 = Math.floor(Math.random() * elements.length);
+
+        while (index2 === index1) {
+            index2 = Math.floor(Math.random() * elements.length);
+        }
+
+        const parent = elements[0].parentNode;
+        const tempNode = document.createElement('div');
+
+        parent.insertBefore(tempNode, elements[index1]);
+        parent.insertBefore(elements[index1], elements[index2 + 1]);
+        parent.insertBefore(elements[index2], tempNode);
+        parent.removeChild(tempNode);
+    }
+
 // Set onclick properties for the buttons
 document.getElementById("addEnd").onclick = addEnd;
 document.getElementById("addFront").onclick = addFront;
 document.getElementById("remove").onclick = remove;
+document.getElementById("swap").onclick = swap;
+
 </script>
 
 </html>

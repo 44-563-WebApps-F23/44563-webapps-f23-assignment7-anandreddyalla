@@ -33,11 +33,15 @@
                     <p>Penalty is zero</p>
                 </div>
                 <div style="text-align: center;">
-                    <a id="help-button" onclick="help()" class="btn btn-secondary text-white" style="text-align: center;">Click for help</a>
+                    <a id="help-button" onclick="help()" class="btn btn-secondary text-white"
+                        style="text-align: center;">Click for help</a>
                 </div>
                 <br>
                 <div id="help" class="alert bg-success text-white" style="height: 50px;">
                     <p>Help report</p>
+                </div>
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-primary" onclick="newGame()">New Game</button>
                 </div>
             </div>
         </div>
@@ -49,7 +53,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-2 col-md-6"  id="location0" onclick="check(0)">
+                <div class="col-lg-2 col-md-6" id="location0" onclick="check(0)">
                     <img src="Images/Location.jpg" alt="Location" width="100px" height="100px">
                 </div>
                 <div class="col-lg-2 col-md-6" id="location1" onclick="check(1)">
@@ -153,21 +157,21 @@
             for (var i = 0; i < 25; i++) {
                 ids.push("location" + i);
             }
-    
-            var checkCount = 0;
+
+            var checkCount =0 ;
             var penalty = 0;
             var lastCheck = 0;
-            var treasureLocation = 5;
-            var trapLocation = 18;
+            var treasureLocation = Math.floor(Math.random() * 24);
+            var trapLocation = Math.floor(Math.random() * 24);
             var gameOver = false;
-    
+
             function check(position) {
                 if (gameOver) return;
-    
+
                 var id = ids[position];
                 var location = document.getElementById(id);
                 var img = location.querySelector("img");
-    
+
                 if (position === treasureLocation) {
                     img.src = "Images/Treasure.jpg";
                     gameOver = true;
@@ -180,29 +184,29 @@
                     img.src = "Images/Pirate.png";
                     penalty++;
                 }
-    
+
                 checkCount++;
-                document.getElementById("locations").textContent = `Number of locations checked is: ` +checkCount;
-                document.getElementById("penalty").textContent = `Penalty is: ` +penalty;
+                document.getElementById("locations").textContent = `Number of locations checked is: ` + checkCount;
+                document.getElementById("penalty").textContent = `Penalty is: ` + penalty;
                 lastCheck = position;
             }
-    
+
             // Function to provide help
             function help() {
                 if (gameOver) return;
-    
+
                 // Calculate row and column for treasure and last location
                 const rowTreasure = Math.floor(treasureLocation / 5);
                 const colTreasure = treasureLocation % 5;
                 const rowLastCheck = Math.floor(lastCheck / 5);
                 const colLastCheck = lastCheck % 5;
-    
+
                 let helpText = "";
-    
+
                 // Determine help based on distance
                 const rowDifference = Math.abs(rowTreasure - rowLastCheck);
                 const colDifference = Math.abs(colTreasure - colLastCheck);
-    
+
                 if (rowDifference + colDifference === 1) {
                     helpText = "Can smell it";
                 } else if (rowDifference + colDifference === 2) {
@@ -212,13 +216,26 @@
                     helpText = "Step Faster";
                     penalty += 2;
                 }
-    
+
                 // Update the text on the help element
                 document.getElementById("help").textContent = helpText;
-                document.getElementById("penalty").textContent = `Penalty is: ` +penalty;
+                document.getElementById("penalty").textContent = `Penalty is: ` + penalty;
             }
-    
-           
+
+            function newGame() {
+                treasureLocation = Math.floor(Math.random() * 24);
+                trapLocation = Math.floor(Math.random() * 24);
+                checkCount = 0
+                penalty = 0
+                lastCheck = 0
+                gameOver = false
+                document.getElementById("penalty").textContent = "Penalty is 0";
+                document.getElementById("locations").textContent = "Number of locations checked is 0";
+                for (i = 0; i < 25; i++) {
+                    document.getElementById(ids[i]).querySelector("img").src= "Images/Location.jpg";
+                }
+            }
+
             // Set the onClick property for "Click for help"
             document.getElementById("help").onclick = help;
         </script>
