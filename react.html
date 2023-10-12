@@ -17,6 +17,7 @@
     <div id="counter">Count: </div>
     <button id="startTimer">Start Timer</button>
     <button id="react">React</button>
+    <button  onclick="random()">Random</button>
 
     <script>
         // Variables to hold reaction time and countdown
@@ -59,6 +60,34 @@ function startTime() {
     }, 8000);
 }
 
+function random() {
+    reactTime = undefined;
+    document.getElementById('target').innerText = 'Your time: ';
+    document.getElementById('counter').innerText = 'Count: ';
+
+    let countdownTime = Math.floor(Math.random() * (10 - 2 + 1)) + 2;
+
+    let tooSlowTimeout = setTimeout(() => {
+        document.getElementById('target').innerText = 'Too Slow';
+    }, countdownTime * 1000);
+
+    for (let i = countdownTime; i >= 0; i--) {
+        setTimeout(() => {
+            document.getElementById('counter').innerText = `Count: ${i}`;
+        }, (countdownTime - i) * 1000);
+    }
+
+    setTimeout(() => {
+        clearTimeout(tooSlowTimeout);
+        if (reactTime === undefined) {
+            document.getElementById('target').innerText = 'Too Slow';
+        } else {
+            let endTime = Date.now();
+            let elapsedTime = endTime - reactTime;
+            document.getElementById('target').innerText = `Your time: ${elapsedTime} milliseconds`;
+        }
+    }, countdownTime * 1000);
+}
 // Set the "Start Timer" button's onclick property to call startTime()
 document.getElementById("startTimer").onclick = startTime;
 
